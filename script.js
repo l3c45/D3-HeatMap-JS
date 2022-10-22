@@ -9,8 +9,8 @@ getData()
 .catch(err=> console.log)
 
 const render = arr => {
-  const w = 1600;
-  const h = 600;
+  const w = 1800;
+  const h = 500;
   const padding=50;
   const minYear=d3.min(arr.monthlyVariance,d =>d.year)
   const maxYear=d3.max(arr.monthlyVariance,d =>d.year)
@@ -33,7 +33,18 @@ const render = arr => {
   const yAxis = d3.axisLeft(yScale)
   
   .tickFormat(d3.timeFormat("%b"))
-  
+
+  const min=d3.min(arr.monthlyVariance,d =>d.variance+arr.baseTemperature)
+  const max=d3.max(arr.monthlyVariance,d =>d.variance+arr.baseTemperature)
+  console.log(min,max)
+
+ 
+
+  const colors = d3.scaleQuantize()
+    .domain([min,max])
+    .range(["#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4", "#E6F598", 
+    "#FFFFBF", "#FEE08B", "#FDAE61", "#F46D43", "#D53E4F", "#9E0142"]);
+		
 
 
   const svg = d3.select("body")
@@ -55,14 +66,9 @@ const render = arr => {
      .attr("width", padWidth +"px")
      .attr("height", padHeigth)
      .attr("temp",d => baseTemp+d.variance)
-     .attr("fill",d => baseTemp+d.variance<8?"orange":"blue")
-     
-    /*
-     .attr("data-date",d=>d[0])
-     .attr("data-gdp",d=>d[1])
-     .on('mouseover', mouseoverHandler)
-     .on('mouseleave', mouseoutHandler)
-       */
+     .attr("fill", d=>colors(baseTemp+d.variance))
+     //.attr("fill",d => baseTemp+d.variance<8?"orange":"blue")
+   
     svg.append("g")
      .attr("id","x-axis")
      .attr("transform", "translate(50," + (h) + ")")
