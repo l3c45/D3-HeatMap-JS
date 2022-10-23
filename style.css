@@ -6,7 +6,6 @@
 
 body {
   background-color: white;
-  height: 100vh;
   font-family: 'Roboto', sans-serif;
   margin: 0;
   display: flex;
@@ -16,12 +15,20 @@ body {
   user-select: none;
 }
 
-svg {
+#graph {
   display: block;
-  padding:0 100px;
+  padding:0 ;
 }
 
-.bar {
-
-  
+#tooltip {
+  z-index: 1;
+  position: absolute;
+  background-color: rgba(255,255,255,.6);
+  padding:  0 30px;
+  font-weight: bold
 }
+
+#legend {
+  position: absolute;
+}
+
